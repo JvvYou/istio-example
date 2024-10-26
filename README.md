@@ -1,6 +1,7 @@
-python 3.12
-kubernetes 1.30.2
-istio 1.23.2
+基础环境:
+* python 3.12
+* kubernetes 1.30.2
+* istio 1.23.2
 
 ## 1、serviceA
 
