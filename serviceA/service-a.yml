@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-a
+  labels:
+    app: service-a
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: service-a
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: service-a
+        version: v1
+    spec:
+      containers:
+      - name: service-a
+        image: service-a:v18
+        ports:
+        - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-a
+  labels:
+    app: service-a
+spec:
+  selector:
+    app: service-a
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8000
+    targetPort: 8000

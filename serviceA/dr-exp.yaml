@@ -1,0 +1,67 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: main-service
+spec:
+  hosts:
+  - "myservice-a.com"
+  gateways:
+  - my-service-gw
+  http:
+  - match:
+    - uri:
+        prefix: "/api/v1/testA"
+    route:
+    - destination:
+        host: service-a
+        port:
+          number: 8000
+  - match:
+    - uri:
+        prefix: "/api/v1/testB"
+    route:
+    - destination:
+        host: service-b
+        port:
+          number: 9000
+  - match:
+      - uri:
+          prefix: "/api/v1/testC"
+    route:
+      - destination:
+          host: service-c
+          port:
+            number: 9000
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: service-a-destination
+spec:
+  host: service-a
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+
+#---
+#apiVersion: networking.istio.io/v1
+#kind: DestinationRule
+#metadata:
+#  name: service-b-destination
+#spec:
+#  host: service-b
+#  trafficPolicy:
+#    loadBalancer:
+#      simple: ROUND_ROBIN
+#  subsets:
+#  - name: v1
+#    labels:
+#      version: v1
+#  - name: v2
+#    labels:
+#      version: v2
+#    trafficPolicy:
+#      loadBalancer:
+#        simple: ROUND_ROBIN
+

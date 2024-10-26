@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-c
+  labels:
+    app: service-c
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-c
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: service-c
+        version: v1
+    spec:
+      containers:
+      - name: service-c
+        image: service-b:v18
+        ports:
+        - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-c
+  labels:
+    app: service-c
+spec:
+  selector:
+    app: service-c
+  ports:
+  - name: http
+    protocol: TCP
+    port: 9000
+    targetPort: 9000
