@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: service-c
-        image: service-b:v18
+        image: service-b-c-skywalking:v2
         ports:
         - containerPort: 9000
 ---
